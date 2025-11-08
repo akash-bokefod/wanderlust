@@ -1,0 +1,77 @@
+/* navbar */
+.navbar{
+    background-color: white;
+    padding: 1rem 0;
+    margin-bottom: 1rem !important;
+}
+
+.fa-compass{
+    color: #fe424d;
+    font-size: 2rem;
+}
+
+.nav-link{
+    color: #222 !important;
+}
+
+/* footer */
+.f-info{
+    text-align: center;
+    background: #ebebed;
+    height: 8rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items:space-evenly;
+}
+.fa-brands{
+    font-size: 1.5rem;
+}
+.f-social-media{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.f-privacy-terms a{
+    text-decoration: none;
+    color: #222;
+}
+
+.f-privacy-terms a:hover{
+    text-decoration: underline;
+}
+
+.f-privacy-terms{
+    width: 100%;
+}
+
+/* card */
+.card{
+    border: none;
+    margin-bottom: 2rem;
+}
+.card-img-top{
+    border-radius: 2rem !important;
+    height: 20rem;
+}
+.cards-sec{
+    margin-left: 1rem;
+}
+
+.home-card:hover{
+    /* background-color: white !important; */
+    opacity: 0.5 !important;
+}
+
+/* add listing */
+.add-btn,.edit-btn{
+    background-color: #fe424d;
+    border: none !important;
+}
+
+/* show page */
+.btn-edit-del{
+    display: flex;
+    gap: 1rem;
+}
