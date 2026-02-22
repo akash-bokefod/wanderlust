@@ -34,7 +34,7 @@ app.engine('ejs',ejsMate);
 const store=MongoStore.create({
     mongoUrl:dburl,
     crypto:{
-        secret:"mysercret"
+        secret:process.env.SECRET
     },
     touchAfter:24*3600
 })
@@ -45,7 +45,7 @@ store.on("error",(err)=>{
 
 const sessionOption={
     store,
-    secret:"mysercret",
+    secret:process.env.SECRET,
     resave: false, 
     saveUninitialized: false,
     cookie: { maxAge: 7*24*60*60*1000}
