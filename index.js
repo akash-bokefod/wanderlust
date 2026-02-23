@@ -1,5 +1,8 @@
 require("dotenv").config();
 
+console.log(process.env.SECRET);
+
+
 const express=require('express');
 const mongoose=require('mongoose');
 const MONGO_URI='mongodb://127.0.0.1:27017/wanderlust'
@@ -17,6 +20,7 @@ const flash=require("connect-flash");
 const passport=require("passport"); 
 const LocalStrategy=require("passport-local");
 const user=require("./models/user.js");
+const { log } = require("console");
 
 mongoose.connect(dburl).then(()=>{console.log("connnection sucuessful");})
 .catch((err)=>{console.log(err);})
