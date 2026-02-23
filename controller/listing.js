@@ -56,7 +56,7 @@ module.exports.addListing=async (req,res,next)=>{
     const url=req.file.path;
     req.body.listing.owner=req.user._id;
     req.body.listing.image={filename,url};
-    await listing.insertOne(req.body.listing);
+    await listing.create(req.body.listing);
     req.flash("success","new listing create successfully!");
     res.redirect('/listings');
 }
