@@ -1,3 +1,6 @@
+const dns = require("dns"); 
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
+
 require("dotenv").config();
 
 console.log(process.env.SECRET);
@@ -22,11 +25,9 @@ const LocalStrategy=require("passport-local");
 const user=require("./models/user.js");
 const { log } = require("console");
 
-mongoose.connect(dburl).then(()=>{console.log("connnection sucuessful");})
-.catch((err)=>{console.log(err);})
 
 const app=express();
-const port=3000;
+const port=process.env.PORT || 3000;
 app.use(methodOverride('_method'));
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
@@ -35,24 +36,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.engine('ejs',ejsMate);
 
-const store=MongoStore.create({
-    mongoUrl:dburl,
-    crypto:{
-        secret:process.env.SECRET
-    },
-    touchAfter:24*3600
-})
-
-store.on("error",(err)=>{
-    console.log("error in mongo session store",err);
-})
-
 const sessionOption={
-    store,
     secret:process.env.SECRET,
     resave: false, 
     saveUninitialized: false,
-    cookie: { maxAge: 7*24*60*60*1000}
+    cookie: { maxAge: 7*24*60*60*1000},
+    store: MongoStore.create({
+      mongoUrl:dburl,
+      collectionName: "sessions", // optional
+      ttl: 14 * 24 * 60 * 60 // 14 days
+    })
 }
 
 app.use(session(sessionOption));
@@ -89,6 +82,18 @@ app.use((err,req,res,next)=>{
     res.status(statusCode).render('listings/error.ejs',{message});
 })
 
-app.listen(port,()=>{
-    console.log("server is starting...in port ",port);
-})  
+// app.listen(port,()=>{
+//     console.log("server is starting...in port ",port);
+// })  
+
+
+main().then(() => {
+    console.log("connection successful");
+    app.listen(port, () => {
+        console.log("server is starting...in port ", port);
+    });
+}).catch(err => console.log(err));
+
+async function main() {
+    await mongoose.connect(dburl);
+}
